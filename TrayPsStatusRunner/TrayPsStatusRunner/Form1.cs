@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -97,25 +98,47 @@ namespace TrayPsStatusRunner
 
         private void fileSystemWatcher1_Changed(object sender, FileSystemEventArgs e)
         {
-            var content = File.ReadAllText(txtStatusFilePath.Text);
-            if (content.Contains(txtErrorSignal.Text))
+            fileSystemWatcher1.EnableRaisingEvents = false;
+            notifyIcon1.Icon = _okIcon;
+            var content = "";
+            for (int i = 0; i < 10; i++)
             {
-                notifyIcon1.Icon = _errorIcon;
-                return;
+                try
+                {
+                    content = File.ReadAllText(txtStatusFilePath.Text);
+                    break;
+                }
+                catch
+                {
+                    Thread.Sleep(500);
+                }
+            }
+
+            if (content.Contains(txtInfoSignal.Text))
+            {
+                notifyIcon1.Icon = _infoIcon;
             }
             if (content.Contains(txtQuestionSignal.Text))
             {
                 notifyIcon1.Icon = _questionIcon;
-                return;
             }
-            if (content.Contains(txtInfoSignal.Text))
+            if (content.Contains(txtErrorSignal.Text))
             {
-                notifyIcon1.Icon = _infoIcon;
-                return;
+                notifyIcon1.Icon = _errorIcon;
             }
 
-            notifyIcon1.Icon = _okIcon;
+            
+            fileSystemWatcher1.EnableRaisingEvents = true;
+        }
 
+        private void openStatusFileButton_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Multiselect = false;
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtStatusFilePath.Text = openFileDialog1.FileName;
+            }
+            
         }
     }
 }

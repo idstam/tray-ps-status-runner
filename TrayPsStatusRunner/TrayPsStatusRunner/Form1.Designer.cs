@@ -97,6 +97,7 @@
             this.openStatusFileButton.TabIndex = 2;
             this.openStatusFileButton.Text = "Browse";
             this.openStatusFileButton.UseVisualStyleBackColor = true;
+            this.openStatusFileButton.Click += new System.EventHandler(this.openStatusFileButton_Click);
             // 
             // openFileDialog1
             // 
