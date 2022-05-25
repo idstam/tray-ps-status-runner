@@ -51,6 +51,8 @@
             this.snippetNameTextBox = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.btnDeleteSnippet = new System.Windows.Forms.Button();
+            this.btnSaveSnippet = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -201,6 +203,8 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.btnSaveSnippet);
+            this.groupBox2.Controls.Add(this.btnDeleteSnippet);
             this.groupBox2.Controls.Add(this.textBox4);
             this.groupBox2.Controls.Add(this.snippetNameTextBox);
             this.groupBox2.Controls.Add(this.label1);
@@ -226,7 +230,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.snippetNameTextBox.Location = new System.Drawing.Point(62, 27);
             this.snippetNameTextBox.Name = "snippetNameTextBox";
-            this.snippetNameTextBox.Size = new System.Drawing.Size(865, 20);
+            this.snippetNameTextBox.Size = new System.Drawing.Size(703, 20);
             this.snippetNameTextBox.TabIndex = 1;
             // 
             // textBox4
@@ -247,6 +251,26 @@
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             this.fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
+            // 
+            // btnDeleteSnippet
+            // 
+            this.btnDeleteSnippet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteSnippet.Location = new System.Drawing.Point(852, 25);
+            this.btnDeleteSnippet.Name = "btnDeleteSnippet";
+            this.btnDeleteSnippet.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteSnippet.TabIndex = 5;
+            this.btnDeleteSnippet.Text = "Delete";
+            this.btnDeleteSnippet.UseVisualStyleBackColor = true;
+            // 
+            // btnSaveSnippet
+            // 
+            this.btnSaveSnippet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveSnippet.Location = new System.Drawing.Point(771, 25);
+            this.btnSaveSnippet.Name = "btnSaveSnippet";
+            this.btnSaveSnippet.Size = new System.Drawing.Size(75, 23);
+            this.btnSaveSnippet.TabIndex = 6;
+            this.btnSaveSnippet.Text = "Save";
+            this.btnSaveSnippet.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -300,6 +324,8 @@
         private System.Windows.Forms.TextBox snippetNameTextBox;
         private System.Windows.Forms.Label label1;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.Button btnSaveSnippet;
+        private System.Windows.Forms.Button btnDeleteSnippet;
     }
 }
 
