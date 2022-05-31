@@ -25,7 +25,7 @@ namespace TrayPsStatusRunner.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("status-trigger-txt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string TriggerFilePath {
             get {
                 return ((string)(this["TriggerFilePath"]));
@@ -37,7 +37,7 @@ namespace TrayPsStatusRunner.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("error")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ErrorTrigger {
             get {
                 return ((string)(this["ErrorTrigger"]));
@@ -49,7 +49,7 @@ namespace TrayPsStatusRunner.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("warning")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string QuestionTrigger {
             get {
                 return ((string)(this["QuestionTrigger"]));
@@ -61,7 +61,7 @@ namespace TrayPsStatusRunner.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("what?")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string InfoTrigger {
             get {
                 return ((string)(this["InfoTrigger"]));

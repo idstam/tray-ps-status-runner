@@ -39,15 +39,14 @@
             this.txtStatusFilePath = new System.Windows.Forms.TextBox();
             this.openStatusFileButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtInfoSignal = new System.Windows.Forms.TextBox();
             this.txtQuestionSignal = new System.Windows.Forms.TextBox();
             this.txtErrorSignal = new System.Windows.Forms.TextBox();
             this.statusSIgnalToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.lstScriptNames = new System.Windows.Forms.ListBox();
             this.btnSaveSnippet = new System.Windows.Forms.Button();
             this.btnDeleteSnippet = new System.Windows.Forms.Button();
@@ -55,15 +54,16 @@
             this.txtScriptName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.notifyMenue.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // notifyIcon1
@@ -119,7 +119,7 @@
             this.txtStatusFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtStatusFilePath.Location = new System.Drawing.Point(97, 20);
-            this.txtStatusFilePath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtStatusFilePath.Margin = new System.Windows.Forms.Padding(4);
             this.txtStatusFilePath.Name = "txtStatusFilePath";
             this.txtStatusFilePath.Size = new System.Drawing.Size(539, 23);
             this.txtStatusFilePath.TabIndex = 1;
@@ -129,7 +129,7 @@
             // 
             this.openStatusFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.openStatusFileButton.Location = new System.Drawing.Point(643, 17);
-            this.openStatusFileButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.openStatusFileButton.Margin = new System.Windows.Forms.Padding(4);
             this.openStatusFileButton.Name = "openStatusFileButton";
             this.openStatusFileButton.Size = new System.Drawing.Size(88, 28);
             this.openStatusFileButton.TabIndex = 2;
@@ -140,37 +140,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::TrayPsStatusRunner.Properties.Resources.Custom_Icon_Design_Flatastic_10_File_warning;
-            this.pictureBox1.InitialImage = global::TrayPsStatusRunner.Properties.Resources.Custom_Icon_Design_Flatastic_10_File_warning;
-            this.pictureBox1.Location = new System.Drawing.Point(2, 34);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(37, 39);
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::TrayPsStatusRunner.Properties.Resources.Custom_Icon_Design_Flatastic_10_Help_file;
-            this.pictureBox2.Location = new System.Drawing.Point(2, 81);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(37, 39);
-            this.pictureBox2.TabIndex = 4;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::TrayPsStatusRunner.Properties.Resources.Custom_Icon_Design_Flatastic_10_File_info;
-            this.pictureBox3.Location = new System.Drawing.Point(2, 128);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(37, 39);
-            this.pictureBox3.TabIndex = 5;
-            this.pictureBox3.TabStop = false;
             // 
             // groupBox1
             // 
@@ -183,9 +152,9 @@
             this.groupBox1.Controls.Add(this.pictureBox3);
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Location = new System.Drawing.Point(26, 60);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(705, 183);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
@@ -198,7 +167,7 @@
             this.txtInfoSignal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtInfoSignal.Location = new System.Drawing.Point(47, 137);
-            this.txtInfoSignal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtInfoSignal.Margin = new System.Windows.Forms.Padding(4);
             this.txtInfoSignal.Name = "txtInfoSignal";
             this.txtInfoSignal.Size = new System.Drawing.Size(646, 23);
             this.txtInfoSignal.TabIndex = 8;
@@ -209,7 +178,7 @@
             this.txtQuestionSignal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtQuestionSignal.Location = new System.Drawing.Point(47, 90);
-            this.txtQuestionSignal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtQuestionSignal.Margin = new System.Windows.Forms.Padding(4);
             this.txtQuestionSignal.Name = "txtQuestionSignal";
             this.txtQuestionSignal.Size = new System.Drawing.Size(646, 23);
             this.txtQuestionSignal.TabIndex = 7;
@@ -220,7 +189,7 @@
             this.txtErrorSignal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtErrorSignal.Location = new System.Drawing.Point(47, 43);
-            this.txtErrorSignal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtErrorSignal.Margin = new System.Windows.Forms.Padding(4);
             this.txtErrorSignal.Name = "txtErrorSignal";
             this.txtErrorSignal.Size = new System.Drawing.Size(646, 23);
             this.txtErrorSignal.TabIndex = 6;
@@ -240,14 +209,35 @@
             this.groupBox2.Controls.Add(this.txtScriptName);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Location = new System.Drawing.Point(26, 251);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.MinimumSize = new System.Drawing.Size(0, 100);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(705, 320);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Scripts";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(7, 69);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 16);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Code:";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(514, 69);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(99, 16);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Available scripts";
             // 
             // lstScriptNames
             // 
@@ -258,7 +248,7 @@
             this.lstScriptNames.IntegralHeight = false;
             this.lstScriptNames.ItemHeight = 18;
             this.lstScriptNames.Location = new System.Drawing.Point(511, 89);
-            this.lstScriptNames.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstScriptNames.Margin = new System.Windows.Forms.Padding(4);
             this.lstScriptNames.Name = "lstScriptNames";
             this.lstScriptNames.Size = new System.Drawing.Size(181, 222);
             this.lstScriptNames.TabIndex = 7;
@@ -268,7 +258,7 @@
             // 
             this.btnSaveSnippet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveSnippet.Location = new System.Drawing.Point(511, 31);
-            this.btnSaveSnippet.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSaveSnippet.Margin = new System.Windows.Forms.Padding(4);
             this.btnSaveSnippet.Name = "btnSaveSnippet";
             this.btnSaveSnippet.Size = new System.Drawing.Size(88, 28);
             this.btnSaveSnippet.TabIndex = 6;
@@ -280,7 +270,7 @@
             // 
             this.btnDeleteSnippet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDeleteSnippet.Location = new System.Drawing.Point(606, 31);
-            this.btnDeleteSnippet.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDeleteSnippet.Margin = new System.Windows.Forms.Padding(4);
             this.btnDeleteSnippet.Name = "btnDeleteSnippet";
             this.btnDeleteSnippet.Size = new System.Drawing.Size(88, 28);
             this.btnDeleteSnippet.TabIndex = 5;
@@ -294,7 +284,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtScript.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtScript.Location = new System.Drawing.Point(58, 65);
-            this.txtScript.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtScript.Margin = new System.Windows.Forms.Padding(4);
             this.txtScript.MinimumSize = new System.Drawing.Size(4, 24);
             this.txtScript.Multiline = true;
             this.txtScript.Name = "txtScript";
@@ -308,7 +298,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtScriptName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtScriptName.Location = new System.Drawing.Point(58, 33);
-            this.txtScriptName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtScriptName.Margin = new System.Windows.Forms.Padding(4);
             this.txtScriptName.Name = "txtScriptName";
             this.txtScriptName.Size = new System.Drawing.Size(446, 23);
             this.txtScriptName.TabIndex = 1;
@@ -329,26 +319,38 @@
             this.fileSystemWatcher1.SynchronizingObject = this;
             this.fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
             // 
-            // label2
+            // pictureBox2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(514, 69);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(99, 16);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Available scripts";
+            this.pictureBox2.Image = global::TrayPsStatusRunner.Properties.Resources.warning;
+            this.pictureBox2.Location = new System.Drawing.Point(2, 81);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(37, 39);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 4;
+            this.pictureBox2.TabStop = false;
             // 
-            // label3
+            // pictureBox3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 69);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 16);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Code:";
+            this.pictureBox3.Image = global::TrayPsStatusRunner.Properties.Resources.info;
+            this.pictureBox3.Location = new System.Drawing.Point(2, 128);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(37, 39);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 5;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::TrayPsStatusRunner.Properties.Resources.error;
+            this.pictureBox1.Location = new System.Drawing.Point(2, 34);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(37, 39);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
             // 
             // Form1
             // 
@@ -361,21 +363,23 @@
             this.Controls.Add(this.txtStatusFilePath);
             this.Controls.Add(this.lblStatusFilePath);
             this.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(347, 625);
             this.Name = "Form1";
+            this.ShowInTaskbar = false;
             this.Text = "Config";
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.notifyMenue.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

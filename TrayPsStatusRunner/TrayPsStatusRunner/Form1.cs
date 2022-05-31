@@ -69,29 +69,32 @@ namespace TrayPsStatusRunner
             {
                 lstScriptNames.Items.Add(scriptName);
             }
-            reloadConfig();
 
-            var bmp = Properties.Resources.Custom_Icon_Design_Flatastic_10_Delete_file;
+
+            var bmp = Properties.Resources.error;
             bmp.MakeTransparent();
             System.IntPtr icH = bmp.GetHicon();
             _errorIcon = Icon.FromHandle(icH);
 
-            bmp = Properties.Resources.Custom_Icon_Design_Flatastic_10_Help_file;
+            bmp = Properties.Resources.warning;
             bmp.MakeTransparent();
             icH = bmp.GetHicon();
             _questionIcon = Icon.FromHandle(icH);
 
-            bmp = Properties.Resources.Custom_Icon_Design_Flatastic_10_File_info;
+            bmp = Properties.Resources.info;
             bmp.MakeTransparent();
             icH = bmp.GetHicon();
             _infoIcon = Icon.FromHandle(icH);
 
-            bmp = Properties.Resources.Custom_Icon_Design_Flatastic_10_File_complete;
+            bmp = Properties.Resources.ok;
             bmp.MakeTransparent();
             icH = bmp.GetHicon();
             _okIcon = Icon.FromHandle(icH);
 
             notifyIcon1.Icon = _okIcon;
+
+            reloadConfig();
+            fileSystemWatcher1_Changed(null, null);
         }
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)
@@ -178,6 +181,7 @@ namespace TrayPsStatusRunner
             fileSystemWatcher1.EnableRaisingEvents = false;
             notifyIcon1.Icon = _okIcon;
             var content = "";
+            var trigger = "";
             for (int i = 0; i < 10; i++)
             {
                 try
@@ -190,21 +194,29 @@ namespace TrayPsStatusRunner
                     Thread.Sleep(500);
                 }
             }
-
-            if (content.Contains(txtInfoSignal.Text))
+            
+            if (!string.IsNullOrWhiteSpace(txtInfoSignal.Text) && content.Contains(txtInfoSignal.Text))
             {
+                trigger = txtInfoSignal.Text;
+                notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
                 notifyIcon1.Icon = _infoIcon;
             }
-            if (content.Contains(txtQuestionSignal.Text))
+            if (!string.IsNullOrWhiteSpace(txtQuestionSignal.Text) && content.Contains(txtQuestionSignal.Text))
             {
+                trigger = txtQuestionSignal.Text;
+                notifyIcon1.BalloonTipIcon = ToolTipIcon.Warning;
                 notifyIcon1.Icon = _questionIcon;
             }
-            if (content.Contains(txtErrorSignal.Text))
+            if (!string.IsNullOrWhiteSpace(txtErrorSignal.Text) && content.Contains(txtErrorSignal.Text))
             {
+                trigger = txtErrorSignal.Text;
+                notifyIcon1.BalloonTipIcon = ToolTipIcon.Error;
                 notifyIcon1.Icon = _errorIcon;
             }
-
-
+            if (!string.IsNullOrEmpty(trigger)) {
+                notifyIcon1.BalloonTipText = "Found [ " + trigger + " ] in status file.";
+                notifyIcon1.ShowBalloonTip(5000);
+            }
             fileSystemWatcher1.EnableRaisingEvents = true;
         }
 

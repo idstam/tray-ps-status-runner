@@ -63,9 +63,9 @@ namespace TrayPsStatusRunner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Custom_Icon_Design_Flatastic_10_Delete_file {
+        internal static System.Drawing.Bitmap error {
             get {
-                object obj = ResourceManager.GetObject("Custom-Icon-Design-Flatastic-10-Delete-file", resourceCulture);
+                object obj = ResourceManager.GetObject("error", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace TrayPsStatusRunner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Custom_Icon_Design_Flatastic_10_File_complete {
+        internal static System.Drawing.Bitmap info {
             get {
-                object obj = ResourceManager.GetObject("Custom-Icon-Design-Flatastic-10-File-complete", resourceCulture);
+                object obj = ResourceManager.GetObject("info", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace TrayPsStatusRunner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Custom_Icon_Design_Flatastic_10_File_info {
+        internal static System.Drawing.Bitmap ok {
             get {
-                object obj = ResourceManager.GetObject("Custom-Icon-Design-Flatastic-10-File-info", resourceCulture);
+                object obj = ResourceManager.GetObject("ok", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,39 +93,9 @@ namespace TrayPsStatusRunner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Custom_Icon_Design_Flatastic_10_File_warning {
+        internal static System.Drawing.Bitmap warning {
             get {
-                object obj = ResourceManager.GetObject("Custom-Icon-Design-Flatastic-10-File-warning", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Custom_Icon_Design_Flatastic_10_Help_file {
-            get {
-                object obj = ResourceManager.GetObject("Custom-Icon-Design-Flatastic-10-Help-file", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Custom_Icon_Design_Flatastic_10_New_file {
-            get {
-                object obj = ResourceManager.GetObject("Custom-Icon-Design-Flatastic-10-New-file", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Custom_Icon_Design_Flatastic_10_Search_file {
-            get {
-                object obj = ResourceManager.GetObject("Custom-Icon-Design-Flatastic-10-Search-file", resourceCulture);
+                object obj = ResourceManager.GetObject("warning", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
