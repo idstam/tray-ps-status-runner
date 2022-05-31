@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,8 @@ namespace TrayPsStatusRunner
         private Icon _questionIcon;
         private Icon _infoIcon;
         private Icon _okIcon;
-        private Dictionary<string, string> _scripts;
+        private ConfigData _config;
+        private string _lastResult;
 
         public Form1()
         {
@@ -54,22 +56,7 @@ namespace TrayPsStatusRunner
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            txtStatusFilePath.Text = Properties.Settings.Default.TriggerFilePath;
-            txtErrorSignal.Text = Properties.Settings.Default.ErrorTrigger;
-            txtQuestionSignal.Text = Properties.Settings.Default.QuestionTrigger;
-            txtInfoSignal.Text = Properties.Settings.Default.InfoTrigger;
-
-            _scripts = JsonConvert.DeserializeObject<Dictionary<string, string>>(Properties.Settings.Default.Scripts);
-            if (_scripts is null)
-            {
-                _scripts = new Dictionary<string, string>();
-            }
-
-            foreach (var scriptName in _scripts.Keys)
-            {
-                lstScriptNames.Items.Add(scriptName);
-            }
-
+            loadConfig();
 
             var bmp = Properties.Resources.error;
             bmp.MakeTransparent();
@@ -93,8 +80,49 @@ namespace TrayPsStatusRunner
 
             notifyIcon1.Icon = _okIcon;
 
-            reloadConfig();
-            fileSystemWatcher1_Changed(null, null);
+            reloadTriggersAndMenue();
+            if (cboTrigger.Text == "File")
+            {
+                fileSystemWatcher1_Changed(null, null);
+            }
+        }
+
+        private void loadConfig()
+        {
+            var fp = Assembly.GetEntryAssembly().Location;
+            var p = new FileInfo(fp).DirectoryName;
+
+            var configFile = Path.Combine(p, "config.json");
+            if (File.Exists(configFile))
+            {
+                _config = JsonConvert.DeserializeObject<ConfigData>(File.ReadAllText(configFile));
+                if(_config.Scripts is null)
+                {
+                    _config.Scripts = new Dictionary<string, string>();
+                }
+
+                var cboIndex = cboTrigger.FindString(_config.TriggerType);
+
+                cboTrigger.SelectedIndex = cboIndex > -1 ? cboIndex : 0;
+
+                txtStatusFilePath.Text = _config.TriggerCommand;
+                txtErrorSignal.Text = _config.ErrorTrigger;
+                txtQuestionSignal.Text = _config.WarningTrigger;
+                txtInfoSignal.Text = _config.InfoTrigger;
+                udCommandInterval.Value = _config.TriggerInterval;
+
+                foreach (var scriptName in _config.Scripts.Keys)
+                {
+                    lstScriptNames.Items.Add(scriptName);
+                }
+                reloadTriggersAndMenue();
+            }
+            else
+            {
+                _config = new ConfigData();
+                _config.Scripts = new Dictionary<string, string>();
+                saveConfig();
+            }
         }
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)
@@ -116,25 +144,42 @@ namespace TrayPsStatusRunner
 
         private void saveConfig()
         {
-            Properties.Settings.Default.TriggerFilePath = txtStatusFilePath.Text;
-            Properties.Settings.Default.ErrorTrigger = txtErrorSignal.Text;
-            Properties.Settings.Default.QuestionTrigger = txtQuestionSignal.Text;
-            Properties.Settings.Default.InfoTrigger = txtInfoSignal.Text;
+            _config.TriggerCommand = txtStatusFilePath.Text;
+            _config.TriggerType = cboTrigger.Text;
+            _config.ErrorTrigger = txtErrorSignal.Text;
+            _config.InfoTrigger = txtQuestionSignal.Text;
+            _config.WarningTrigger = txtInfoSignal.Text;
+            _config.TriggerInterval = Decimal.ToInt32(udCommandInterval.Value);
 
-            Properties.Settings.Default.Scripts = JsonConvert.SerializeObject(_scripts);
-            Properties.Settings.Default.Save();
-            reloadConfig();
+            var json = JsonConvert.SerializeObject(_config);
+            var fp = Assembly.GetEntryAssembly().Location;
+            var p = new FileInfo(fp).DirectoryName;
+
+            var configFile = Path.Combine(p, "config.json");
+            File.WriteAllText(configFile, json);
+            reloadTriggersAndMenue();
 
         }
-        private void reloadConfig()
+        private void reloadTriggersAndMenue()
         {
-            if (File.Exists(txtStatusFilePath.Text))
+            if (cboTrigger.Text == "File" && File.Exists(txtStatusFilePath.Text))
             {
                 var f = new FileInfo(txtStatusFilePath.Text);
                 fileSystemWatcher1.Path = f.DirectoryName;
                 fileSystemWatcher1.Filter = f.Name;
                 fileSystemWatcher1.EnableRaisingEvents = true;
             }
+            if (cboTrigger.Text != "File" && !string.IsNullOrWhiteSpace(txtStatusFilePath.Text))
+            {
+                if(udCommandInterval.Value == 0)
+                {
+                    udCommandInterval.Value = 1;
+                }
+
+                timer1.Interval = Decimal.ToInt32(udCommandInterval.Value * 1000 * 60);
+                timer1.Enabled = true;
+            }
+
 
             for (int i = notifyMenue.Items.Count - 1; i >= 0; i--)
             {
@@ -146,7 +191,7 @@ namespace TrayPsStatusRunner
             }
 
             var mIndex = 0;
-            foreach (var scriptName in _scripts.Keys)
+            foreach (var scriptName in _config.Scripts.Keys)
             {
                 var m = new ToolStripButton(scriptName);
                 m.Tag = "Dynamic";
@@ -166,7 +211,7 @@ namespace TrayPsStatusRunner
                     FileName = "powershell.exe",
                     UseShellExecute = true,
                     RedirectStandardOutput = false,
-                    Arguments ="-NoExit -Command " + _scripts[m.Text],
+                    Arguments ="-NoExit -Command " + _config.Scripts[m.Text],
                     CreateNoWindow = false
                 };
 
@@ -179,9 +224,9 @@ namespace TrayPsStatusRunner
         private void fileSystemWatcher1_Changed(object sender, FileSystemEventArgs e)
         {
             fileSystemWatcher1.EnableRaisingEvents = false;
-            notifyIcon1.Icon = _okIcon;
+
             var content = "";
-            var trigger = "";
+            
             for (int i = 0; i < 10; i++)
             {
                 try
@@ -194,7 +239,21 @@ namespace TrayPsStatusRunner
                     Thread.Sleep(500);
                 }
             }
-            
+            checkContent(content);
+
+            if (File.Exists(txtStatusFilePath.Text))
+            {
+                fileSystemWatcher1.EnableRaisingEvents = true;
+            }
+
+        }
+
+        private void checkContent(string content)
+        {
+            _lastResult = content;
+            notifyIcon1.Icon = _okIcon;
+
+            var trigger = "";
             if (!string.IsNullOrWhiteSpace(txtInfoSignal.Text) && content.Contains(txtInfoSignal.Text))
             {
                 trigger = txtInfoSignal.Text;
@@ -213,13 +272,13 @@ namespace TrayPsStatusRunner
                 notifyIcon1.BalloonTipIcon = ToolTipIcon.Error;
                 notifyIcon1.Icon = _errorIcon;
             }
-            if (!string.IsNullOrEmpty(trigger)) {
+            if (!string.IsNullOrEmpty(trigger))
+            {
                 notifyIcon1.BalloonTipText = "Found [ " + trigger + " ] in status file.";
                 notifyIcon1.ShowBalloonTip(5000);
             }
-            fileSystemWatcher1.EnableRaisingEvents = true;
-        }
 
+        }
         private void openStatusFileButton_Click(object sender, EventArgs e)
         {
             openFileDialog1.Multiselect = false;
@@ -233,18 +292,27 @@ namespace TrayPsStatusRunner
 
         private void btnSaveSnippet_Click(object sender, EventArgs e)
         {
-            _scripts[txtScriptName.Text] = txtScript.Text;
+            _config.Scripts[txtScriptName.Text] = txtScript.Text;
             if (!lstScriptNames.Items.Contains(txtScriptName.Text))
             {
                 lstScriptNames.Items.Add(txtScriptName.Text);
             }
-
+            reloadTriggersAndMenue();
         }
 
         private void lstScriptNames_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtScriptName.Text = lstScriptNames.SelectedItem.ToString();
-            txtScript.Text = _scripts[txtScriptName.Text];
+            if (lstScriptNames.SelectedIndex == -1)
+            {
+                txtScript.Text = "";
+                txtScriptName.Text = "";
+            }
+            else
+            {
+
+                txtScriptName.Text = lstScriptNames.SelectedItem.ToString();
+                txtScript.Text = _config.Scripts[txtScriptName.Text];
+            }
         }
 
         private void configToolStripMenuItem_Click(object sender, EventArgs e)
@@ -257,6 +325,96 @@ namespace TrayPsStatusRunner
         private void txt_Leave(object sender, EventArgs e)
         {
             saveConfig();
+        }
+
+        private void cboTrigger_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void cboTrigger_TextChanged(object sender, EventArgs e)
+        {
+            if(cboTrigger.Text == "File")
+            {
+                udCommandInterval.Visible = false;
+                lblMinutes.Visible = false; 
+                openStatusFileButton.Visible = true;
+            } else
+            {
+                lblMinutes.Visible = true;
+                udCommandInterval.Visible = true;
+                openStatusFileButton.Visible = false;
+
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            if (cboTrigger.Text == "Powershell")
+            {
+                var start = new ProcessStartInfo
+                {
+                    FileName = "powershell.exe",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    Arguments = "-Command " + txtStatusFilePath.Text,
+                    CreateNoWindow = true
+                };
+
+
+                using (var process = Process.Start(start))
+                {
+                    process.WaitForExit();
+                    var content = process.StandardOutput.ReadToEnd();
+                    checkContent(content);
+                }
+            }
+            else
+            {
+                var start = new ProcessStartInfo
+                {
+                    FileName = "cmd.exe",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    Arguments = "/C " + txtStatusFilePath.Text,
+                    CreateNoWindow = true
+                };
+
+
+                using (var process = Process.Start(start))
+                {
+                    process.WaitForExit();
+                    var content = process.StandardOutput.ReadToEnd();
+                    checkContent(content);
+                }
+
+            }
+            timer1.Enabled = true;
+        }
+
+        private void btnDeleteSnippet_Click(object sender, EventArgs e)
+        {
+            _config.Scripts.Remove(txtScriptName.Text);
+            lstScriptNames.Items.RemoveAt(lstScriptNames.FindString(txtScriptName.Text));
+            reloadTriggersAndMenue();
+
+        }
+
+        private void lastResultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(_lastResult, "Last status/result. CTRL + C to copy all of it");
+        }
+
+        private void checkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(cboTrigger.Text == "File")
+            {
+                fileSystemWatcher1_Changed(null, null);
+            } else
+            {
+                timer1_Tick(null, null);
+            }
         }
     }
 }

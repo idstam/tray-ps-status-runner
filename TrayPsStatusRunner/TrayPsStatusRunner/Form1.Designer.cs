@@ -43,6 +43,9 @@
             this.txtInfoSignal = new System.Windows.Forms.TextBox();
             this.txtQuestionSignal = new System.Windows.Forms.TextBox();
             this.txtErrorSignal = new System.Windows.Forms.TextBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.statusSIgnalToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -54,16 +57,20 @@
             this.txtScriptName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.cboTrigger = new System.Windows.Forms.ComboBox();
+            this.udCommandInterval = new System.Windows.Forms.NumericUpDown();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.lblMinutes = new System.Windows.Forms.Label();
+            this.lastResultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyMenue.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udCommandInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // notifyIcon1
@@ -80,27 +87,29 @@
             // 
             this.notifyMenue.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator1,
+            this.checkToolStripMenuItem,
+            this.lastResultToolStripMenuItem,
             this.configToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.notifyMenue.Name = "notifyMenue";
-            this.notifyMenue.Size = new System.Drawing.Size(111, 54);
+            this.notifyMenue.Size = new System.Drawing.Size(181, 120);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(107, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // configToolStripMenuItem
             // 
             this.configToolStripMenuItem.Name = "configToolStripMenuItem";
-            this.configToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.configToolStripMenuItem.Text = "Config";
             this.configToolStripMenuItem.Click += new System.EventHandler(this.configToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -110,18 +119,18 @@
             this.lblStatusFilePath.Location = new System.Drawing.Point(22, 23);
             this.lblStatusFilePath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStatusFilePath.Name = "lblStatusFilePath";
-            this.lblStatusFilePath.Size = new System.Drawing.Size(68, 16);
+            this.lblStatusFilePath.Size = new System.Drawing.Size(54, 16);
             this.lblStatusFilePath.TabIndex = 0;
-            this.lblStatusFilePath.Text = "StatusFile:";
+            this.lblStatusFilePath.Text = "Trigger:";
             // 
             // txtStatusFilePath
             // 
             this.txtStatusFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtStatusFilePath.Location = new System.Drawing.Point(97, 20);
+            this.txtStatusFilePath.Location = new System.Drawing.Point(228, 20);
             this.txtStatusFilePath.Margin = new System.Windows.Forms.Padding(4);
             this.txtStatusFilePath.Name = "txtStatusFilePath";
-            this.txtStatusFilePath.Size = new System.Drawing.Size(539, 23);
+            this.txtStatusFilePath.Size = new System.Drawing.Size(408, 23);
             this.txtStatusFilePath.TabIndex = 1;
             this.txtStatusFilePath.Leave += new System.EventHandler(this.txt_Leave);
             // 
@@ -135,6 +144,7 @@
             this.openStatusFileButton.TabIndex = 2;
             this.openStatusFileButton.Text = "Browse";
             this.openStatusFileButton.UseVisualStyleBackColor = true;
+            this.openStatusFileButton.Visible = false;
             this.openStatusFileButton.Click += new System.EventHandler(this.openStatusFileButton_Click);
             // 
             // openFileDialog1
@@ -158,7 +168,7 @@
             this.groupBox1.Size = new System.Drawing.Size(705, 183);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Status signal in file";
+            this.groupBox1.Text = "Status signal in file or result";
             this.statusSIgnalToolTip.SetToolTip(this.groupBox1, "If the text is found in the status file the tray icon is switched to the correspo" +
         "nding icon. Leave text empty if you don\'t want to use the icon.");
             // 
@@ -195,6 +205,39 @@
             this.txtErrorSignal.TabIndex = 6;
             this.txtErrorSignal.Leave += new System.EventHandler(this.txt_Leave);
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::TrayPsStatusRunner.Properties.Resources.warning;
+            this.pictureBox2.Location = new System.Drawing.Point(2, 81);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(37, 39);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 4;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::TrayPsStatusRunner.Properties.Resources.info;
+            this.pictureBox3.Location = new System.Drawing.Point(2, 128);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(37, 39);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 5;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::TrayPsStatusRunner.Properties.Resources.error;
+            this.pictureBox1.Location = new System.Drawing.Point(2, 34);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(37, 39);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
+            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -216,7 +259,7 @@
             this.groupBox2.Size = new System.Drawing.Size(705, 320);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Scripts";
+            this.groupBox2.Text = "Powershell scripts";
             // 
             // label3
             // 
@@ -276,6 +319,7 @@
             this.btnDeleteSnippet.TabIndex = 5;
             this.btnDeleteSnippet.Text = "Delete";
             this.btnDeleteSnippet.UseVisualStyleBackColor = true;
+            this.btnDeleteSnippet.Click += new System.EventHandler(this.btnDeleteSnippet_Click);
             // 
             // txtScript
             // 
@@ -319,44 +363,69 @@
             this.fileSystemWatcher1.SynchronizingObject = this;
             this.fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
             // 
-            // pictureBox2
+            // cboTrigger
             // 
-            this.pictureBox2.Image = global::TrayPsStatusRunner.Properties.Resources.warning;
-            this.pictureBox2.Location = new System.Drawing.Point(2, 81);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(37, 39);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 4;
-            this.pictureBox2.TabStop = false;
+            this.cboTrigger.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTrigger.FormattingEnabled = true;
+            this.cboTrigger.Items.AddRange(new object[] {
+            "Powershell",
+            "CMD",
+            "File"});
+            this.cboTrigger.Location = new System.Drawing.Point(84, 20);
+            this.cboTrigger.Name = "cboTrigger";
+            this.cboTrigger.Size = new System.Drawing.Size(134, 24);
+            this.cboTrigger.TabIndex = 10;
+            this.cboTrigger.SelectedIndexChanged += new System.EventHandler(this.cboTrigger_SelectedIndexChanged);
+            this.cboTrigger.TextChanged += new System.EventHandler(this.cboTrigger_TextChanged);
             // 
-            // pictureBox3
+            // udCommandInterval
             // 
-            this.pictureBox3.Image = global::TrayPsStatusRunner.Properties.Resources.info;
-            this.pictureBox3.Location = new System.Drawing.Point(2, 128);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(37, 39);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 5;
-            this.pictureBox3.TabStop = false;
+            this.udCommandInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.udCommandInterval.Location = new System.Drawing.Point(643, 20);
+            this.udCommandInterval.Name = "udCommandInterval";
+            this.udCommandInterval.Size = new System.Drawing.Size(41, 23);
+            this.udCommandInterval.TabIndex = 11;
+            this.statusSIgnalToolTip.SetToolTip(this.udCommandInterval, "Interval to run command in minutes.");
+            this.udCommandInterval.Visible = false;
+            this.udCommandInterval.Leave += new System.EventHandler(this.txt_Leave);
             // 
-            // pictureBox1
+            // timer1
             // 
-            this.pictureBox1.Image = global::TrayPsStatusRunner.Properties.Resources.error;
-            this.pictureBox1.Location = new System.Drawing.Point(2, 34);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(37, 39);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // lblMinutes
+            // 
+            this.lblMinutes.AutoSize = true;
+            this.lblMinutes.Location = new System.Drawing.Point(689, 23);
+            this.lblMinutes.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMinutes.Name = "lblMinutes";
+            this.lblMinutes.Size = new System.Drawing.Size(52, 16);
+            this.lblMinutes.TabIndex = 12;
+            this.lblMinutes.Text = "minutes";
+            this.lblMinutes.Visible = false;
+            // 
+            // lastResultToolStripMenuItem
+            // 
+            this.lastResultToolStripMenuItem.Name = "lastResultToolStripMenuItem";
+            this.lastResultToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.lastResultToolStripMenuItem.Text = "Last result";
+            this.lastResultToolStripMenuItem.Click += new System.EventHandler(this.lastResultToolStripMenuItem_Click);
+            // 
+            // checkToolStripMenuItem
+            // 
+            this.checkToolStripMenuItem.Name = "checkToolStripMenuItem";
+            this.checkToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.checkToolStripMenuItem.Text = "Check";
+            this.checkToolStripMenuItem.Click += new System.EventHandler(this.checkToolStripMenuItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(760, 586);
+            this.Controls.Add(this.lblMinutes);
+            this.Controls.Add(this.udCommandInterval);
+            this.Controls.Add(this.cboTrigger);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.openStatusFileButton);
@@ -374,12 +443,13 @@
             this.notifyMenue.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udCommandInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -414,6 +484,12 @@
         private System.Windows.Forms.ToolStripMenuItem configToolStripMenuItem;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cboTrigger;
+        private System.Windows.Forms.NumericUpDown udCommandInterval;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label lblMinutes;
+        private System.Windows.Forms.ToolStripMenuItem lastResultToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkToolStripMenuItem;
     }
 }
 
